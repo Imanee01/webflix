@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\PolitesseController;
+use App\Models\Category;
+use App\Models\Movie;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,3 +31,75 @@ Route::get('/à-propos',function(){
 });
 Route::get('/à-propos',[AboutController::class,"about"]);
 Route::get('/à-propos/{user}',[AboutController::class, "aboutSomeone"]);
+
+// Affiche le formulaire
+Route::get('/categories/creer',function(){
+    return view('categories.create');
+});
+
+// Traite le formulaire
+Route::post('/categories/creer',function(){
+    // verifier les erreurs 
+    request()->validate([
+        'name'=>'required|min:3|max:10',
+        'email'=>'required|email'
+    ]);
+//    dump( request('name')); // on recupere ce qui est ecrit dans le formulaire
+   Category::create([
+       'name'=>request('name'),
+   ]);
+
+    return redirect('/exercice/categories');
+});
+// List
+Route::get('/exercice/categories',function(){
+    return view('exercice.categories',[
+        'categories'=> Category::all() // equivalent du select
+    ]);
+});
+
+// Creation de catégorie
+Route::get('/exercice/categories/creer',function(){
+    // Le modele Category correspond à la table categories...
+    $category = Category::create([
+        'name'=> 'Test'
+    ]);
+
+    return redirect('/exercice/categories');
+    
+});
+
+// Afficher l'id dans de chaque catégorie
+Route::get('/exercice/categories/{id}',function ($id){
+    $category =Category::find($id); // dans la category qui et dans l'url trouver l id 
+    return $category->name;
+});
+
+Route::get('/exercice/movies',function(){
+    return view('exercice.movies',[
+        'movies'=> Movie::all()
+    ]);
+});
+
+Route::get('/exercice/movies/creer', function(){
+    $movie = Movie::create([
+        'title'=> 'Le parrain',
+        'synopsys'=> 'En 1945, à New York, les Corleone sont une des 5 familles de la mafia. Don Vito Corleone, "parrain" de cette famille, marie sa fille à un bookmaker. ',
+        'duration' => 185 ,
+        'youtube' => 'video',
+         'cover' => 'le-parrain.jpg',
+         'realeased_at' => '2010-02-02',
+    ]);
+    return redirect('/exercice/movies');
+});
+
+Route::get('/exercice/movies/{id}',function($id){
+    $movie = Movie::find($id);
+    return view('exercice.movie',[
+        'movie' => $movie 
+   
+    ]);
+});
+
+
+

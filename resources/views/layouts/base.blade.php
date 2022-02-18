@@ -11,6 +11,9 @@
       <li><a href="/bonjour">Hello</a></li>  
       <li><a href="/au-revoir">Good bye</a></li>      
       <li><a href="/à-propos">A propos</a></li>      
+      <li><a href="/exercice/categories">Catégories</a></li>      
+      <li><a href="/exercice/movies">Movies</a></li>      
+      <li><a href="/categories/creer">Ajouter une Catégories</a></li>      
     </ul>
     
     @yield('content')
