@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PolitesseController;
 use App\Models\Category;
 use App\Models\Movie;
@@ -32,25 +33,13 @@ Route::get('/à-propos',function(){
 Route::get('/à-propos',[AboutController::class,"about"]);
 Route::get('/à-propos/{user}',[AboutController::class, "aboutSomeone"]);
 
+Route::get('/categories',[CategoryController::class,'index']);
+
 // Affiche le formulaire
-Route::get('/categories/creer',function(){
-    return view('categories.create');
-});
+Route::get('/categories/creer',[CategoryController::class,'create']);
 
 // Traite le formulaire
-Route::post('/categories/creer',function(){
-    // verifier les erreurs 
-    request()->validate([
-        'name'=>'required|min:3|max:10',
-        'email'=>'required|email'
-    ]);
-//    dump( request('name')); // on recupere ce qui est ecrit dans le formulaire
-   Category::create([
-       'name'=>request('name'),
-   ]);
-
-    return redirect('/exercice/categories');
-});
+Route::post('/categories/creer',[CategoryController::class,'store']);
 // List
 Route::get('/exercice/categories',function(){
     return view('exercice.categories',[
