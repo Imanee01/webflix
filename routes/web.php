@@ -40,12 +40,21 @@ Route::get('/categories/creer',[CategoryController::class,'create']);
 
 // Traite le formulaire
 Route::post('/categories/creer',[CategoryController::class,'store']);
+
+Route::get('/categories/{category}', [CategoryController::class,'show']);
+Route::get('/categories/{category}/modifier',[CategoryController::class,'edit']);// modifier la categorie (la page modifier)
+Route::put('/categories/{category}',[CategoryController::class,'update']); // put permet de mettre a jour la categorie existante (met a jour sur bdd)
+
+
+
+
 // List
 Route::get('/exercice/categories',function(){
     return view('exercice.categories',[
         'categories'=> Category::all() // equivalent du select
     ]);
 });
+
 
 // Creation de catégorie
 Route::get('/exercice/categories/creer',function(){

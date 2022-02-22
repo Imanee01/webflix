@@ -37,7 +37,7 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) // Traiter les erreurs
+    public function store(Request $request) // On creer la categorie 
     {
         
     request()->validate([   // verifier les erreurs 
@@ -59,9 +59,11 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Category $category)
     {
-        //
+        return view('categories.show',[
+            'category'=>$category, // Remplace find 
+        ]);
     }
 
     /**
@@ -70,9 +72,11 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Category $category)
     {
-        //
+        return view('categories.edit',[
+            'category'=>$category, // Remplace find 
+        ]);
     }
 
     /**
@@ -82,9 +86,17 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(Request $request,Category $category)//On refait un formulaire pour modifier la catégorie 
+    { //                                   On recupere l'id de la category
+        // Verifier les erreurs
+        request()->validate([
+            'name'=>'required|min:3',
+        ]);
+        // On modifie la categorie dans la bdd
+        $category->update([
+            'name'=>request('name'),
+        ]);
+        return redirect('/categories')->with('status','La catégorie '.$category->name.' a été Modifier.'); // Affiche un message des que le formulaire est envoyer
     }
 
     /**

@@ -12,7 +12,7 @@
     
 @endif
   
-    
+    <h1>Créer une catégorie</h1>
     <form action="" method="post">
         @csrf
         <input type="text"name="name"placeholder="Nom..." class="form-control" value="{{old('name')}}">

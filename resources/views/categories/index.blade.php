@@ -11,6 +11,8 @@
                    <div class="card-body">
                       <p> {{$category->name}}</p>
                        <a class= "btn btn-primary"href="/categories/{{ $category->id }}">Voir</a>
+                       <a class= "btn btn-secondary"href="/categories/{{ $category->id }}/modifier">Modifier</a>
+
                     </div>
             </div>
             </div>
